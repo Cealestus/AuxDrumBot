@@ -8,8 +8,8 @@ import re
 import pyaudio
 import os
 
-from cfg import cfg
-from system.utils import twitchConnect
+import cfg
+from utils import twitchConnect
 import wave
 
 CHAT_MSG = re.compile(r"^:\w+!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :")
