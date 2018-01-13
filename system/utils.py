@@ -5,7 +5,7 @@ Created on Jan 13, 2018
 '''
 import socket
 
-from cfg import cfg
+import cfg
 
 def twitchConnect():
     """
