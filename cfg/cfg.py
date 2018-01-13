@@ -9,9 +9,8 @@ PORT = 6667
 NICK = "auxilioDrumBot"
 PASS = "oauth:tp9umt3xf6rydlotqnw7r61wqzkqq7"
 CHAN = "#auxilioabaltotest"
-AUTO_UPDATE_INTERVAL = 600
-RATE = (20/30)
 CHUNK = 1024
+OUTINDEX = 1
 
 allowedOperators = {
     'mrgregles1',

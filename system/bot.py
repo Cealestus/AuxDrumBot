@@ -44,7 +44,7 @@ while True:
                                         channels=wf.getnchannels(),
                                         rate=wf.getframerate(),
                                         output=True,
-                                        input_device_index=1)
+                                        input_device_index=cfg.OUTINDEX)
                         data = wf.readframes(cfg.CHUNK)
                         while len(data) > 0:
                             stream.write(data)
