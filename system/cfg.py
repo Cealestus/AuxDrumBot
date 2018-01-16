@@ -10,7 +10,6 @@ NICK = "auxilioDrumBot"
 PASS = "oauth:tp9umt3xf6rydlotqnw7r61wqzkqq7"
 CHAN = "#auxilioabaltotest"
 CHUNK = 1024
-OUTINDEX = 1
 
 allowedOperators = {
     'mrgregles1',
@@ -33,6 +32,5 @@ commands = {
     'crash3',
     'roll',
     'flam',
-    'cymbal',
-    'electrotom'
+    'cymbal'
     }
