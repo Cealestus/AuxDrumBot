@@ -8,12 +8,15 @@ HOST = "irc.chat.twitch.tv"
 PORT = 6667
 NICK = "auxilioDrumBot"
 PASS = "oauth:tp9umt3xf6rydlotqnw7r61wqzkqq7"
-CHAN = "#auxilioabaltotest"
+CHAN = "#mrgreglesplays"
 CHUNK = 1024
 
 allowedOperators = {
     'mrgregles1',
-    'matteisler'}
+    'matteisler',
+    'sukutash',
+    'bluedaisy',
+    'theellieminati'}
 
 commands = {
     'snare',

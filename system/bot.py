@@ -13,7 +13,7 @@ import wave
 import pyaudio
 
 import cfg
-from utils import twitchConnect
+from utils import twitchConnect, chat
 
 
 CHAT_MSG = re.compile(r"^:\w+!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :")
@@ -56,8 +56,10 @@ def requestFromChat():
                 command = splitMessage[0]
             if command == 'startbot' and username in cfg.allowedOperators:
                 run = True
+                chat(twitchSocket, 'Started drumbot by user command')
             elif command == 'stopbot' and username in cfg.allowedOperators:
                 run = False
+                chat(twitchSocket, 'Stopped drumbot by user command')
             elif run:
                 if command in cfg.commands:
                     requestQueue.put(command)
@@ -70,4 +72,5 @@ playThread = threading.Thread(target=playFromQueue)
 playThread.daemon = True
 playThread.start()
 
+chat(twitchSocket, 'Started drumbot')
                         
