@@ -28,7 +28,7 @@ def playFromQueue():
     while True:
         if requestQueue.qsize() != 0:
             try:
-                sound = requestQueue.get()
+                sound = requestQueue.get(block=True)
                 wf = wave.open(os.environ['HOMEPATH'] + '\\Desktop\ChatDrums\\' + sound + '.wav', 'rb')
                 stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
                                 channels=wf.getnchannels(),
@@ -74,6 +74,10 @@ requestThread.start()
 playThread = threading.Thread(target=playFromQueue)
 playThread.daemon = True
 playThread.start()
+
+playThread2 = threading.Thread(target=playFromQueue)
+playThread2.daemon = True
+playThread2.start()
 
 chat(twitchSocket, 'Started drumbot')
                         
