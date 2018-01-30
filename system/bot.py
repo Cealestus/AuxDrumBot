@@ -20,7 +20,8 @@ CHAT_MSG = re.compile(r"^:\w+!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :")
 
 twitchSocket = twitchConnect()
 p = pyaudio.PyAudio()
-run = True
+runBot = True
+runBotLock = threading.Lock()
 requestQueue = queue.Queue()
 
 def playFromQueue():
@@ -37,12 +38,13 @@ def playFromQueue():
                 while len(data) > 0:
                     stream.write(data)
                     data = wf.readframes(cfg.CHUNK)
-                    stream.stop_stream()
-                    stream.close()
+                stream.stop_stream()
+                stream.close()
             except FileNotFoundError:
-                pass
+                chat(twitchSocket, 'Error: File not found')
 
 def requestFromChat():
+    global runBot
     while True:
         response = twitchSocket.recv(1024).decode("utf-8")
         if response == "PING :tmi.twitch.tv\r\n":
@@ -53,16 +55,17 @@ def requestFromChat():
             lowerCase = message.lower()
             splitMessage = lowerCase.split()
             if len(splitMessage) == 1:
-                command = splitMessage[0]
-            if command == 'startbot' and username in cfg.allowedOperators:
-                run = True
-                chat(twitchSocket, 'Started drumbot by user command')
-            elif command == 'stopbot' and username in cfg.allowedOperators:
-                run = False
-                chat(twitchSocket, 'Stopped drumbot by user command')
-            elif run:
-                if command in cfg.commands:
-                    requestQueue.put(command)
+                with runBotLock:
+                    command = splitMessage[0]
+                    if command == 'startbot' and username in cfg.allowedOperators:
+                        runBot = True
+                        chat(twitchSocket, 'Chat drums enabled MAKE SOME NOISE!')
+                    elif command == 'stopbot' and username in cfg.allowedOperators:
+                        runBot = False
+                        chat(twitchSocket, '"Chat drums have been put away, they will be back soon')
+                    elif runBot:
+                        if command in cfg.commands:
+                            requestQueue.put(command)
 
 requestThread = threading.Thread(target=requestFromChat)
 requestThread.daemon = True
